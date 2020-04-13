@@ -16,12 +16,30 @@
 // // Learn more about service workers: https://bit.ly/CRA-PWA
 // serviceWorker.unregister();
 
-import {createStore} from 'redux';
+import {createStore, combineReducers} from 'redux';
 const initialState = {
   result:15000,
   value: []
 }
-const reducer = (state = initialState, action) =>{
+const UserReducer= (state={name: "Bomsoul",age: 15}, action) => {
+  switch (action.type) {
+    case "setName" : 
+        state = {
+          ...state,
+          name: action.payload
+        }
+      break;
+    case "setAge" : 
+        state = {
+          ...state,
+          age:action.payload
+        }
+      break;
+    default:
+  }
+  return state;
+}
+const Employeereducer = (state = initialState, action) =>{
   switch (action.type) {
     case "ADD" : 
         state = {
@@ -41,7 +59,7 @@ const reducer = (state = initialState, action) =>{
   }
   return state;
 }
-const store = createStore(reducer);
+const store = createStore(combineReducers({Employeereducer,UserReducer}));
 store.subscribe(()=>{
   console.log("Update Store :" ,store.getState());
 })
@@ -57,3 +75,11 @@ store.dispatch({
   type: "SUB",
   payload: 10000
 });
+store.dispatch({
+  type: "setName",
+  payload: "Redux BomSoul"
+})
+store.dispatch({
+  type: "setAge",
+  payload: 20
+})
