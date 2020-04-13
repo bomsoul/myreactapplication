@@ -17,26 +17,41 @@
 // serviceWorker.unregister();
 
 import {createStore} from 'redux';
-
-const reducer = (state, action) =>{
+const initialState = {
+  result:15000,
+  value: []
+}
+const reducer = (state = initialState, action) =>{
   switch (action.type) {
     case "ADD" : 
-        state += action.payload;
+        state = {
+          ...state,
+          result: state.result+= action.payload,
+          value: [...state.value,action.payload]
+        }
       break;
     case "SUB" : 
-        state -= action.payload;
+        state = {
+          ...state,
+          result: state.result-= action.payload,
+          value: [...state.value,action.payload]
+        }
       break;
     default:
   }
   return state;
 }
-const store = createStore(reducer,15000);
+const store = createStore(reducer);
 store.subscribe(()=>{
   console.log("Update Store :" ,store.getState());
 })
 store.dispatch({
   type: "ADD",
-  payload: 500
+  payload: 15000
+});
+store.dispatch({
+  type: "ADD",
+  payload: 15000
 });
 store.dispatch({
   type: "SUB",
