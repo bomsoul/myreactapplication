@@ -32,7 +32,7 @@ const reducer = (state, action) =>{
 }
 const store = createStore(reducer,15000);
 store.subscribe(()=>{
-  console.log("Update Store:" ,store.getState());
+  console.log("Update Store :" ,store.getState());
 })
 store.dispatch({
   type: "ADD",
