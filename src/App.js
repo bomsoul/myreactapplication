@@ -1,18 +1,32 @@
 import React,{Component} from 'react';
-
+import User from './User';
+import {connect} from 'react-redux';
 class App extends Component{
   render(){
-    var myStyle = {
-      fontSize: 100,
-      color: 'ff0000'
-    }
     return(
       <div>
-        <h1 style={myStyle}>App Component</h1>
-        <h2>{50*50}</h2>
+        <User username={this.props.user.name}/>
+      <button onClick={()=>this.props.setName("redux tutorial")}>ChangeName</button>
       </div>
     )
   }
 }
-export default App;
+const mapStateToProps = (state) =>{
+  return {
+    user:state.user,
+    emp:state.emp
+  }
+}
+
+const mapDispatchToProps = (dispatch) =>{
+  return {
+    setName:(name) =>{
+      dispatch({
+        type:"setName",
+        payload:name
+      })
+    }
+  }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(App);
 

@@ -1,22 +1,17 @@
-// import React from 'react';
-// import ReactDOM from 'react-dom';
-// import './index.css';
-// import App from './App';
-// import * as serviceWorker from './serviceWorker';
-
-// ReactDOM.render(
-//   <React.StrictMode>
-//     <App />
-//   </React.StrictMode>,
-//   document.getElementById('root')
-// );
-
-// // If you want your app to work offline and load faster, you can change
-// // unregister() to register() below. Note this comes with some pitfalls.
-// // Learn more about service workers: https://bit.ly/CRA-PWA
-// serviceWorker.unregister();
-
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import * as serviceWorker from './serviceWorker';
 import {createStore, combineReducers, applyMiddleware} from 'redux';
+import {Provider} from 'react-redux';
+
+
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: https://bit.ly/CRA-PWA
+serviceWorker.unregister();
+
 const initialState = {
   result:15000,
   value: []
@@ -63,27 +58,15 @@ const myLogger = (store) => (next) => (action) => {
   console.log("Log Action",action);
   next(action);
 }
-const store = createStore(combineReducers({Employeereducer,UserReducer}),{},applyMiddleware(myLogger));
+const store = createStore(combineReducers({emp: Employeereducer,user: UserReducer}),{},applyMiddleware(myLogger));
 store.subscribe(()=>{
   console.log("Update Store :" ,store.getState());
 })
-store.dispatch({
-  type: "ADD",
-  payload: 15000
-});
-store.dispatch({
-  type: "ADD",
-  payload: 15000
-});
-store.dispatch({
-  type: "SUB",
-  payload: 10000
-});
-store.dispatch({
-  type: "setName",
-  payload: "Redux BomSoul"
-})
-store.dispatch({
-  type: "setAge",
-  payload: 20
-})
+ReactDOM.render(
+  <React.StrictMode>
+    <Provider store={store}>
+    <App />
+    </Provider>
+  </React.StrictMode>,
+  document.getElementById('root')
+);
